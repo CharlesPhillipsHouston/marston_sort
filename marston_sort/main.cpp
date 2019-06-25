@@ -1,5 +1,6 @@
 /* standard stuff
 by mike marston, jun 9, 2019
+ as of 25 jun 2019
 written to show use of libraries, sorting inside application
 builds fine in xcode
 changed so that code gets TLEs from charles's computer and puts output
@@ -27,7 +28,7 @@ using namespace std;
 class Tle
 {
 public:
-    char platform[25];
+    char platform[25];  // satellite name
     char line1[TLE_LINE_LENGTH];
     char line2[TLE_LINE_LENGTH];
     
@@ -57,7 +58,8 @@ public:
     float apogee;
     float perigee;
     
-    float tleStrToFloat(char * in){
+    float tleStrToFloat(char * in)
+    {
         char temp[10];
         if(in[0] == '-') temp[0] = '-';
         else temp[0] = ' ';
@@ -92,8 +94,8 @@ public:
                &epoch_year, &epoch_day,
                &mean_motion_derivative,
                mm2d,
-               bstr,
-               &ephemeris_type,
+               bstr,  // not really used
+               &ephemeris_type,  // not really used
                &element_number); // end scan card #1
         
         // scan card 3
@@ -133,7 +135,7 @@ public:
         apogee = semi_major * (1 + eccentricity) - 6378.135;
     }  // end Tle definition
     
-    bool checksum(char *line)
+    bool checksum(char *line)  // function that must do something
     {
         int check = 0;
         int i = 0;
@@ -181,7 +183,7 @@ int compareSatellitesPerigee(const void * a, const void * b)
 
 int main()
 {
-    printf("in main now\n"); // debug
+
     FILE* spInput; // input points to file to read from
     FILE* spOutput; // output points to file to write to
     char name_card[TLE_LINE_LENGTH];
@@ -193,9 +195,10 @@ int main()
   //  spInput = fopen("tle_cards.txt", "r");  // read data from marston
   //  spOutput = fopen("tle_output.txt", "w");  // put satellite in marston
     
-    spInput = fopen("/Users/Admin/Documents/tle_cards.txt", "r");  // read data from right place
+    spInput = fopen("/Users/Admin/Documents/tle_cards.txt", "r");  // read data from
+    // folder with code
     spOutput = fopen("/Users/Admin/Documents/c++_marston/tle_output.txt", "w");
-    // put satellite in right place
+    // put satellite in folder with code
     
     int i = 0;
     while (feof(spInput) == 0)
@@ -211,8 +214,7 @@ int main()
     sattellites[0].print(spOutput);  // directed to spOutput
     sattellites[numSats-1].print(spOutput); // directed to spOutput
     
-    qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesPerigee); // where does
-    // this come from???
+    qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesPerigee); 
     
     sattellites[0].print(spOutput);  // spOutput
     sattellites[i-1].print(spInput);
