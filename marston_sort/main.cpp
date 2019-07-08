@@ -49,6 +49,9 @@ public:
     float right_ascension ;
     float eccentricity ;
     float arg_perigee ;
+
+    
+    
     float mean_anomaly ;
     float mean_motion ;
     int orbit ;
@@ -101,6 +104,8 @@ public:
         // scan card 3
             sscanf( line2, "%d %5d %f %f %f %f %f %11f%5d",
                &linenum,
+                   
+                   
                &satnumber,
                &inclination,
                &right_ascension,
@@ -148,6 +153,13 @@ public:
             if(line[i] == '-')
                 check++;
         }  // end for loop
+        
+        
+        
+        
+        
+        
+    
         a = line[strlen(line) - 1]; // -1 for 0 based another -1 to exclude the checksum
         if((check % 10) != a - '0')
             return(false);
@@ -167,19 +179,29 @@ public:
         fprintf(spOutput, "mean_motion: %f\n", mean_motion );
         fprintf(spOutput, "semi_major axis: %f\n", semi_major );
         fprintf(spOutput, "apogee: %f\n", apogee );
-        fprintf(spOutput, "perigee: %f\n", perigee );
+        fprintf(spOutput, "perigee: %f\n\n", perigee );
         //        fprintf(stdout, "", );
     }  // end of print function
     
 };
 
-int compareSatellitesPerigee(const void * a, const void * b)
+int compareSatellitesPerigee(const void * a, const void * b) // sort perigee
 {
     if (((Tle*)a)->perigee  < ((Tle*)b)->perigee) return -1;
     if (((Tle*)a)->perigee == ((Tle*)b)->perigee) return  0;
     if (((Tle*)a)->perigee  > ((Tle*)b)->perigee) return  1;
     return 0; //gets rid of compiler warning, should never get here
 }
+
+int compareSatellitesRAAN(const void * a, const void * b) // sort RAAN
+{
+    if (((Tle*)a)->right_ascension  < ((Tle*)b)->right_ascension) return -1;
+    if (((Tle*)a)->right_ascension == ((Tle*)b)->right_ascension) return  0;
+    if (((Tle*)a)->right_ascension  > ((Tle*)b)->right_ascension) return  1;
+    return 0; //gets rid of compiler warning, should never get here
+}
+
+
 
 int main()
 {
@@ -195,13 +217,16 @@ int main()
   //  spInput = fopen("tle_cards.txt", "r");  // read data from marston
   //  spOutput = fopen("tle_output.txt", "w");  // put satellite in marston
     
-    spInput = fopen("/Users/Admin/Documents/tle_cards.txt", "r");  // read data from
+    spInput = fopen("/Users/Admin/Documents/c++_marston/tle_cards.txt", "r");  // read data from
     // folder with code
     spOutput = fopen("/Users/Admin/Documents/c++_marston/tle_output.txt", "w");
     // put satellite in folder with code
     
+    
+    
+    
     int i = 0;
-    while (feof(spInput) == 0)
+    while (feof(spInput) == 0) // read in all three cards
     {
         
         fgets(name_card, sizeof(name_card), spInput);  // get first line of TLE
@@ -210,15 +235,30 @@ int main()
         sattellites[i] = Tle(name_card, second_card, third_card);
         i++;
     }  // end of while loop, reads TLEs
+    
     int numSats = i;
     sattellites[0].print(spOutput);  // directed to spOutput
     sattellites[numSats-1].print(spOutput); // directed to spOutput
+    // this only prints first four satellites
     
-    qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesPerigee); 
+    // sort by perigee
+    qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesPerigee);
+    
+    sattellites[0].print(spOutput);  // spOutput
+    sattellites[i-1].print(spInput); //??
+    fprintf(spOutput, "sort by perigee\n\n");
+    for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t %d\t %f\n", j, sattellites[j].satnumber, sattellites[j].perigee);
+    // prints record number (j), sat number, and perigee
+  // need to unsort??
+    
+    // sort by RAAN
+    qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesRAAN);
     
     sattellites[0].print(spOutput);  // spOutput
     sattellites[i-1].print(spInput);
-    for(int j = 0; j < numSats; j++) printf("%d\t %d\t %f\n", j, sattellites[j].satnumber, sattellites[j].perigee);
+    fprintf(spOutput, "sort by RAAN\n\n");
+    
+    for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t %d\t %f\n", j, sattellites[j].satnumber, sattellites[j].right_ascension);
     // prints record number (j), sat number, and perigee
     
 }  // end of main
