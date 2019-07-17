@@ -1,6 +1,6 @@
 /* standard stuff
 by mike marston, jun 9, 2019
- as of 25 jun 2019
+ as of 17 jul 2019
 written to show use of libraries, sorting inside application
 builds fine in xcode
 changed so that code gets TLEs from charles's computer and puts output
@@ -28,7 +28,7 @@ using namespace std;
 class Tle
 {
 public:
-    char platform[25];  // satellite name
+    char platform[25];  // satellite name, first card
     char line1[TLE_LINE_LENGTH];
     char line2[TLE_LINE_LENGTH];
     
@@ -131,7 +131,7 @@ public:
          bstar = atof(bstr.c_str());
          */
         
-        eccentricity = eccentricity / 1e7;
+        eccentricity = eccentricity / 1e7; // add decimal place
         
         float tmp = pow((SEC_PER_DAY / (mean_motion * 2 * 3.141592653589)), 2);
         semi_major = pow(MU, .33333333) * pow(tmp, .33333333);
@@ -141,6 +141,7 @@ public:
     }  // end Tle definition
     
     bool checksum(char *line)  // function that must do something
+    // this fixes some characters in the BSTAR and other not needed fields
     {
         int check = 0;
         int i = 0;
