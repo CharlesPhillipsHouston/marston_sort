@@ -80,7 +80,7 @@ public:
         return(b);
     }
     Tle(){}; // empty constructor
-    Tle(char *satName, char * l1, char* l2)  // function Tle
+    Tle(char *satName, char * l1, char* l2)  // function Tle ???
     {
         strncpy(platform, satName, sizeof(platform));
         // platform is name of satellite
@@ -115,8 +115,8 @@ public:
                &mean_motion,
                &orbit); // scan card #1
         // now fix the assumed decimal points
-        mean_motion_sec_derivative = tleStrToFloat(mm2d);
-        bstar = tleStrToFloat(bstr);
+        mean_motion_sec_derivative = tleStrToFloat(mm2d); // that function
+        bstar = tleStrToFloat(bstr); // that function again
         /*//this block assumes values are in a std::string
          if (mm2d[0] == '-') mm2d.insert(mm2d.begin()+1, '.'); //leading - sign
          else(!isdigit(mm2d[0])) mm2d[0] = '.'; //leading blank or + sign
@@ -183,7 +183,7 @@ public:
         //        fprintf(stdout, "", );
     }  // end of print function
     
-};
+}; // odd to see } then ; end of Tle thing
 
 int compareSatellitesPerigee(const void * a, const void * b) // sort perigee
 {
