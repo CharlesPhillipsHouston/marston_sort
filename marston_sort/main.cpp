@@ -246,7 +246,7 @@ int main()
     qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesPerigee);
     
     sattellites[0].print(spOutput);  // spOutput
-    sattellites[i-1].print(spInput); //??
+    sattellites[i-1].print(spOutput); // changed spInput to spOutput
     fprintf(spOutput, "sort by perigee\n\n");
     for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t %d\t %f\n", j, sattellites[j].satnumber, sattellites[j].perigee);
     // prints record number (j), sat number, and perigee
@@ -256,7 +256,7 @@ int main()
     qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesRAAN);
     
     sattellites[0].print(spOutput);  // spOutput
-    sattellites[i-1].print(spInput);
+    sattellites[i-1].print(spOutput); // spInput to spOutput
     fprintf(spOutput, "sort by RAAN\n\n");
     
     for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t %d\t %f\n", j, sattellites[j].satnumber, sattellites[j].right_ascension);
