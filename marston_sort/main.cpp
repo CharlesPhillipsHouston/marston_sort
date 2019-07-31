@@ -1,6 +1,6 @@
 /* standard stuff
 by mike marston, jun 9, 2019
- as of 17 jul 2019
+ as of 31 jul 2019
 written to show use of libraries, sorting inside application
 builds fine in xcode
 changed so that code gets TLEs from charles's computer and puts output
@@ -186,6 +186,14 @@ public:
     
 }; // odd to see } then ; end of Tle thing
 
+int compareSatellitesInclination(const void * a, const void * b) // sort inclination
+{
+    if (((Tle*)a)->inclination  < ((Tle*)b)->inclination) return -1;
+    if (((Tle*)a)->inclination == ((Tle*)b)->inclination) return  0;
+    if (((Tle*)a)->inclination  > ((Tle*)b)->inclination) return  1;
+    return 0; //gets rid of compiler warning, should never get here
+}
+/*
 int compareSatellitesPerigee(const void * a, const void * b) // sort perigee
 {
     if (((Tle*)a)->perigee  < ((Tle*)b)->perigee) return -1;
@@ -202,7 +210,7 @@ int compareSatellitesRAAN(const void * a, const void * b) // sort RAAN
     return 0; //gets rid of compiler warning, should never get here
 }
 
-
+*/
 
 int main()
 {
@@ -242,16 +250,16 @@ int main()
     sattellites[numSats-1].print(spOutput); // directed to spOutput
     // this only prints first four satellites
     
-    // sort by perigee
-    qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesPerigee);
+    // sort by inclination
+    qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesInclination);
     
     sattellites[0].print(spOutput);  // spOutput
     sattellites[i-1].print(spOutput); // changed spInput to spOutput
-    fprintf(spOutput, "sort by perigee\n\n");
-    for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t %d\t %f\n", j, sattellites[j].satnumber, sattellites[j].perigee);
-    // prints record number (j), sat number, and perigee
+    fprintf(spOutput, "sort by inclination\n\n");
+    for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t %d\t %f\n", j, sattellites[j].satnumber, sattellites[j].inclination);
+    // prints record number (j), sat number, and inclination
   // need to unsort??
-    
+    /*
     // sort by RAAN
     qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesRAAN);
     
@@ -260,6 +268,7 @@ int main()
     fprintf(spOutput, "sort by RAAN\n\n");
     
     for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t %d\t %f\n", j, sattellites[j].satnumber, sattellites[j].right_ascension);
-    // prints record number (j), sat number, and perigee
+    // prints record number (j), sat number, and RAAN
+    */
     
 }  // end of main
