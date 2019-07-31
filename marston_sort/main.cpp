@@ -256,9 +256,12 @@ int main()
     sattellites[0].print(spOutput);  // spOutput
     sattellites[i-1].print(spOutput); // changed spInput to spOutput
     fprintf(spOutput, "sort by inclination\n\n");
-    for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t %d\t %f\n", j, sattellites[j].satnumber, sattellites[j].inclination);
+    for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t %d\t %d %f\t %f\n", j, sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].inclination);
     // prints record number (j), sat number, and inclination
   // need to unsort??
+
+    // if you want to sort by perigee, have to put that back in here
+    
     /*
     // sort by RAAN
     qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesRAAN);
