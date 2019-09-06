@@ -14,6 +14,9 @@ changed so that code gets TLEs from charles's computer and puts output
 #include <stdlib.h> // atoi, atof not used yet
 #include <math.h>  // math functions
 
+#include <fstream>  // moving towards better C++ file handling
+// does NOT like fstream.h!!
+
 #define MU  398600.4418  // gravitational parameter
 #define MIN_PER_DAY  24 * 60  // minutes per day
 #define SEC_PER_DAY  (MIN_PER_DAY * 60)   //seconds per day
