@@ -1,11 +1,11 @@
 /* standard stuff
 by mike marston, jun 9, 2019
- as of 31 jul 2019
+ as of 6 sep jul 2019
 written to show use of libraries, sorting inside application
 builds fine in xcode
 changed so that code gets TLEs from charles's computer and puts output
  into right folder on charles' computer
- saved to github
+ moving towards more correct C++ file handling, input, output
  */
 
 #include <stdio.h>
