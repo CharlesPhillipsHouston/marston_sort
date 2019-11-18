@@ -50,11 +50,10 @@ public:
     int element_number ;
     float inclination ;
     float right_ascension ;
+  
+    
     float eccentricity ;
     float arg_perigee ;
-
-    
-    
     float mean_anomaly ;
     float mean_motion ;
     int orbit ;
@@ -104,12 +103,13 @@ public:
                &ephemeris_type,  // not really used
                &element_number); // end scan card #1
         
+      
+        
+        
         // scan card 3
             sscanf( line2, "%d %5d %f %f %f %f %f %11f%5d",
                &linenum,
-                   
-                   
-               &satnumber,
+                &satnumber,
                &inclination,
                &right_ascension,
                &eccentricity,
@@ -229,9 +229,9 @@ int main()
   //  spInput = fopen("tle_cards.txt", "r");  // read data from marston
   //  spOutput = fopen("tle_output.txt", "w");  // put satellite in marston
     
-    spInput = fopen("/Users/Admin/Documents/c++_marston/tle_cards.txt", "r");  // read data from
+    spInput = fopen("/Users/Admin/Documents/satellites_analyzed/tle_input.txt", "r");  // read data from
     // folder with code
-    spOutput = fopen("/Users/Admin/Documents/c++_marston/tle_output.txt", "w");
+    spOutput = fopen("/Users/Admin/Documents/satellites_analyzed/tle_output.txt", "w");
     // put satellite in folder with code
     
     
@@ -259,7 +259,7 @@ int main()
     sattellites[0].print(spOutput);  // spOutput
     sattellites[i-1].print(spOutput); // changed spInput to spOutput
     fprintf(spOutput, "sort by inclination\n\n");
-    for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t %d\t %d %f\t %f\n", j, sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].inclination);
+    for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t %d\t %d %f %f\t %f\n", j, sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].mean_motion, sattellites[j].inclination);
     // prints record number (j), sat number, and inclination
   // need to unsort??
 
