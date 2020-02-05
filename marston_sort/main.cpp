@@ -228,6 +228,9 @@ int main()
     char second_card[TLE_LINE_LENGTH];
     char third_card[TLE_LINE_LENGTH];
     
+    int for_satnumber;  // it is an integer
+    int for_3889 = 3889; // test if this is the same as satnumber
+    
     // spOutput is from the TLE file and is calculated output
     // spOutput3889 is just a list of TLEs for 3889
     
@@ -257,22 +260,30 @@ int main()
         fgets(third_card, sizeof(third_card), spInputTLE);  // outside of the while loop
         sattellites[i] = Tle(name_card, second_card, third_card); // this must insert fields from
         // cards??
+        // right here, sattellites[1] is the satellite number (satnumber)?
         i++;
     }  // end of while loop, reads TLEs
+    
+    
+    //  if this is the TLE for 3889, add it to that file
+    
+   // for_satnumber = sattellites[1];  // set for_satnumber to be the satellite number
+    // is it wanting 3889 to be a string?
+    /*
+    if (sattellites[1] == 3889)
+        // satellite number is characters, needs single quote
+        fprintf(Tle(name_card, second_card, third_card),
+    else
+                {}
+                // there is no need for an else, do an action or just go on
+    */
     
     int numSats = i;
     sattellites[0].print(spOutput);  // not needed
     sattellites[numSats-1].print(spOutput); // not needed
     // this only prints first four satellites
     
-    /*  if this is the TLE for 3889, add it to that file
-    if (sattellites[1] == '3889');
-    // satellite number is characters
-        fprintf(Tle(name_card, second_card, third_card),
-        else
-                {}
-                // there is no need for an else, do an action or just go on
-      */
+   
     // sort by inclination
     qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesPerigee);
     
@@ -289,7 +300,7 @@ int main()
     fclose(spInput3889);
     fclose(spOutput);
     fclose(spOutput3889);
-    // close all inputs and outputs
+    // close all inputs and outputs, did not have that before
     
     /*
     // sort by RAAN
@@ -302,6 +313,5 @@ int main()
     for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t %d\t %f\n", j, sattellites[j].satnumber, sattellites[j].right_ascension);
     // prints record number (j), sat number, and RAAN
     */
-    
-    
+
 }  // end of main
