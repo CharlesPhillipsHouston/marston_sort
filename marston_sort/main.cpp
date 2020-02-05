@@ -268,10 +268,10 @@ int main()
     //  if this is the TLE for 3889, add it to that file
     
    // for_satnumber = sattellites[1];  // set for_satnumber to be the satellite number
-    // is it wanting 3889 to be a string?
+    // 3889 is a number
     /*
     if (sattellites[1] == 3889)
-        // satellite number is characters, needs single quote
+        // test to see if we are on the 3889 TLE
         fprintf(Tle(name_card, second_card, third_card),
     else
                 {}
