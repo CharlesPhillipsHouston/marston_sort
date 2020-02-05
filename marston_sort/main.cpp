@@ -244,9 +244,9 @@ int main()
     spInput3889 = fopen("/User/Admin/Documents/satellites_analyzed/latest/3889.txt", "r");
     // open one file for satellite 3889 TLEs only
     spOutput3889 = fopen("/User/Admin/Documents/satellites_analyzed/latest/3889.txt", "a");
-    // open one file that has satellite 3889 TLEs only can I add another TLE here?
+    // output to file that has satellite 3889 TLEs only can I add another TLE here?
     spOutput = fopen("/Users/Admin/Documents/satellites_analyzed/latest/tle_output_perigee.txt", "w");
-    // put satellite in folder with code
+    // put output in folder with inputs
     
     
     
@@ -266,17 +266,19 @@ int main()
     
     
     //  if this is the TLE for 3889, add it to that file
-    
    // for_satnumber = sattellites[1];  // set for_satnumber to be the satellite number
     // 3889 is a number
-    /*
-    if (sattellites[1] == 3889)
+    
+    if (sattellites[i].satnumber == 3889)
         // test to see if we are on the 3889 TLE
-        fprintf(Tle(name_card, second_card, third_card),
+      
+      //  fprintf(spOutput3889, "test"); // later put 3889 TLE into the 3889 file
+    // print out what satellite number we are on
+        fprintf(spOutput3889, "%d \t", sattellites[1].satnumber);
     else
                 {}
                 // there is no need for an else, do an action or just go on
-    */
+    
     
     int numSats = i;
     sattellites[0].print(spOutput);  // not needed
