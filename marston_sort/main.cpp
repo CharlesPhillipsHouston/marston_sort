@@ -140,6 +140,7 @@ public:
         // good code here
         perigee = semi_major * (1 - eccentricity) - 6378.135;
         apogee = semi_major * (1 + eccentricity) - 6378.135;
+    
     }  // end Tle definition
     
     bool checksum(char *line)  // function that must do something
@@ -234,6 +235,7 @@ int main()
     // spOutput3889 is just a list of TLEs for 3889
     
     Tle sattellites[400];  // structure of 400 lines?
+   // printf("sat number\n", &sattellites[0].satnumber); // can access fields?
     
   //  spInputTLE = fopen("tle_cards.txt", "r");  // read data from marston
   //  spOutput = fopen("tle_output.txt", "w");  // put satellite in marston
