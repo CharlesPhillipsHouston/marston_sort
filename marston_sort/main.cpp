@@ -2,7 +2,6 @@
 by mike marston, jun 9, 2019
  as of 6 sep jul 2019
 written to show use of libraries, sorting inside application
-builds fine in xcode
 changed so that code gets TLEs from charles's computer and puts output
  into right folder on charles' computer
  moving towards more correct C++ file handling, input, output
@@ -82,7 +81,7 @@ public:
         return(b);
     }
     Tle(){}; // empty constructor
-    Tle(char *satName, char * l1, char* l2)  // scan first card?
+    Tle(char *satName, char * l1, char* l2)  // no need to scan first card
     {
         strncpy(platform, satName, sizeof(platform));
         // platform is name of satellite
@@ -91,7 +90,7 @@ public:
         linesGood = checksum(line1) & checksum(line2);
         int linenum;
         char mm2d[10], bstr[10], temp[12];
-       // scan card 2
+       // no need to scan card 1, scan card 2
         sscanf( line1, "%d %5d%1s %2d%3d%3s %2d%f %f %s %s %d %4d",
                &linenum,
                &satnumber, classification,
@@ -241,7 +240,7 @@ int main()
     
     spInputTLE = fopen("/Users/Admin/Documents/satellites_analyzed/latest/satellites.txt", "r");
     // read data from folder with the TLEs and output
-    spInput3889 = fopen("/User/Admin/Documents/satellites_analyzed/latest/3889.txt", "r");
+    // spInput3889 = fopen("/User/Admin/Documents/satellites_analyzed/latest/3889.txt", "r");
     // open one file for satellite 3889 TLEs only
     spOutput3889 = fopen("/User/Admin/Documents/satellites_analyzed/latest/3889.txt", "a");
     // output to file that has satellite 3889 TLEs only can I add another TLE here?
@@ -261,6 +260,7 @@ int main()
         sattellites[i] = Tle(name_card, second_card, third_card); // this must insert fields from
         // cards??
         // right here, sattellites[1] is the satellite number (satnumber)?
+        // printf("test", sattellites[0].satnumber);  // how to point at satnumber?
         i++;
     }  // end of while loop, reads TLEs
     
@@ -270,11 +270,12 @@ int main()
     // 3889 is a number
     
     if (sattellites[i].satnumber == 3889)
-        // test to see if we are on the 3889 TLE
+        // test to see if we are on the 3889 TLE; we don't pass this test ever
       
       //  fprintf(spOutput3889, "test"); // later put 3889 TLE into the 3889 file
     // print out what satellite number we are on
-        fprintf(spOutput3889, "%d \t", sattellites[1].satnumber);
+      //  printf("do we get here??");
+    fprintf(spOutput3889, "%d does this file exist?\t", sattellites[1].satnumber);
     else
                 {}
                 // there is no need for an else, do an action or just go on
@@ -283,7 +284,7 @@ int main()
     int numSats = i;
     sattellites[0].print(spOutput);  // not needed
     sattellites[numSats-1].print(spOutput); // not needed
-    // this only prints first four satellites
+    // this only prints first four satellites, leave it here for now
     
    
     // sort by inclination
@@ -299,7 +300,7 @@ int main()
     // if you want to sort by perigee, have to put that back in here
     
     fclose(spInputTLE);
-    fclose(spInput3889);
+    fclose(spInput3889);  // when we have a TLE file for 3889
     fclose(spOutput);
     fclose(spOutput3889);
     // close all inputs and outputs, did not have that before
