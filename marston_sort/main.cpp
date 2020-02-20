@@ -266,6 +266,7 @@ int main()
         // cards??
         // right here, sattellites[1] is the satellite number (satnumber)?
         // printf("test", sattellites[0].satnumber);  // how to point at satnumber?
+        // need to look for satnumber here and print to files
         i++;
     }  // end of while loop, reads TLEs
     
@@ -273,7 +274,7 @@ int main()
     //  if this is the TLE for 3889, add it to that file
    // for_satnumber = sattellites[1];  // set for_satnumber to be the satellite number
     // 3889 is a number
-    
+    /*
     if (sattellites[i].satnumber == 3889)
         // test to see if we are on the 3889 TLE; we don't pass this test ever
       
@@ -284,7 +285,7 @@ int main()
     else
                 {}
                 // there is no need for an else, do an action or just go on
-    
+    */
     
     int numSats = i;
     sattellites[0].print(spOutput);  // not needed
