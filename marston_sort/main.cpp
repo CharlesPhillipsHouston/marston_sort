@@ -247,9 +247,9 @@ int main()
     // read data from folder with the TLEs
     // spInput3889 = fopen("/User/Admin/Documents/satellites_analyzed/latest/3889.txt", "r");
     // open one file for satellite 3889 TLEs only
-    spOutput3889 = fopen("/User/Admin/Documents/satellites_analyzed/latest/3889.txt", "a");
+    spOutput3889 = fopen("/User/Admin/Documents/satellites_analyzed/3889.txt", "a");
     // output to file that has satellite 3889 TLEs only can I add another TLE here?
-    spOutput = fopen("/Users/Admin/Documents/satellites_analyzed/latest/tle_output_inclination.txt", "w");
+    spOutput = fopen("/Users/Admin/Documents/satellites_analyzed/tle_output_inclination.txt", "w");
     // put output in folder with inputs
     
     
