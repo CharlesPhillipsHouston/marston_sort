@@ -1,7 +1,7 @@
 /* standard stuff
 by mike marston, jun 9, 2019
- as of 6 sep jul 2019
-written to show use of libraries, sorting inside application
+ as of 6 sep jul 2020
+written to grab TLEs and sort for parameters
 changed so that code gets TLEs from charles's computer and puts output
  into right folder on charles' computer
  moving towards more correct C++ file handling, input, output
