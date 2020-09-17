@@ -1,6 +1,6 @@
 /* standard stuff
 by mike marston, jun 9, 2019
- as of 6 sep jul 2020
+ as of 6 sep 2020
 written to grab TLEs and sort for parameters
 changed so that code gets TLEs from charles's computer and puts output
  into right folder on charles' computer
