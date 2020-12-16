@@ -1,6 +1,6 @@
 /* standard stuff
 by mike marston, jun 9, 2019
- as of 6 sep 2020
+ as of 16 dec 2020
 written to grab TLEs and sort for parameters
 changed so that code gets TLEs from charles's computer and puts output
  into right folder on charles' computer
@@ -22,8 +22,8 @@ changed so that code gets TLEs from charles's computer and puts output
 #define TLE_LINE_LENGTH 80
 
 // For Mike's computer
-#define INPUTFILE "tle-cards.txt"  // ??
-#define OUTPUTFILE "tle_output.txt"  // ??
+#define INPUTFILE "tle-cards.txt"  //
+#define OUTPUTFILE "tle_output.txt"  // 
 
 using namespace std;
 
@@ -159,10 +159,6 @@ public:
         }  // end for loop
         
         
-        
-        
-        
-        
     
         a = line[strlen(line) - 1]; // -1 for 0 based another -1 to exclude the checksum
         if((check % 10) != a - '0')
@@ -175,13 +171,13 @@ public:
     { //if no file given prints to stdout (i.e. terminal)
         fprintf(spOutput, "Name: %s\n", platform);
         fprintf(spOutput, "satno: %d\n", satnumber );
-        fprintf(spOutput, "inclination: %f\n", inclination);
-        fprintf(spOutput, "right_ascension: %f\n", right_ascension );
-        fprintf(spOutput, "eccentricity: %f\n", eccentricity );
-        fprintf(spOutput, "arg_perigee: %f\n", arg_perigee );
-        fprintf(spOutput, "mean_anomaly: %f\n", mean_anomaly );
-        fprintf(spOutput, "mean_motion: %f\n", mean_motion );
-        fprintf(spOutput, "semi_major axis: %f\n", semi_major );
+       // fprintf(spOutput, "inclination: %f\n", inclination);
+       // fprintf(spOutput, "right_ascension: %f\n", right_ascension );
+       // fprintf(spOutput, "eccentricity: %f\n", eccentricity );
+       // fprintf(spOutput, "arg_perigee: %f\n", arg_perigee );
+       // fprintf(spOutput, "mean_anomaly: %f\n", mean_anomaly );
+       // fprintf(spOutput, "mean_motion: %f\n", mean_motion );
+       // fprintf(spOutput, "semi_major axis: %f\n", semi_major );
         fprintf(spOutput, "apogee: %f\n", apogee );
         fprintf(spOutput, "perigee: %f\n\n", perigee );
         //        fprintf(stdout, "", );
@@ -189,6 +185,7 @@ public:
     
 }; // odd to see } then ; end of Tle thing
 
+/*
 int compareSatellitesInclination(const void * a, const void * b) // sort inclination
 {
     if (((Tle*)a)->inclination  < ((Tle*)b)->inclination) return -1;
@@ -196,8 +193,9 @@ int compareSatellitesInclination(const void * a, const void * b) // sort inclina
     if (((Tle*)a)->inclination  > ((Tle*)b)->inclination) return  1;
     return 0; //gets rid of compiler warning, should never get here
 }
+ */
 
-/*
+
 int compareSatellitesPerigee(const void * a, const void * b) // sort perigee
 {
     if (((Tle*)a)->perigee  < ((Tle*)b)->perigee) return -1;
@@ -205,7 +203,7 @@ int compareSatellitesPerigee(const void * a, const void * b) // sort perigee
     if (((Tle*)a)->perigee  > ((Tle*)b)->perigee) return  1;
     return 0; //gets rid of compiler warning, should never get here
 }
- */
+ 
 
 /*
 int compareSatellitesRAAN(const void * a, const void * b) // sort RAAN
@@ -222,7 +220,7 @@ int main()
 {
 
     FILE* spInputTLE;  // a file of all the TLEs
-    FILE* spInput3889 = nullptr;// input eventually points to TLE file for 3889
+    // FILE* spInput3889 = nullptr;// input eventually points to TLE file for 3889
     // put in actual path here!!!!
     FILE* spOutput; // output points to file to write calculate results to
     FILE* spOutput3889; // output points to file to write TLEs for 3889 to
@@ -232,7 +230,7 @@ int main()
     char third_card[TLE_LINE_LENGTH];
     
     int for_satnumber;  // it is an integer
-    int for_3889 = 3889; // test if this is the same as satnumber
+   // int for_3889 = 3889; // test if this is the same as satnumber
     
     // spOutput is from the TLE file and is calculated output
     // spOutput3889 is just a list of TLEs for 3889
@@ -243,16 +241,14 @@ int main()
   //  spInputTLE = fopen("tle_cards.txt", "r");  // read data from marston
   //  spOutput = fopen("tle_output.txt", "w");  // put satellite in marston
     
-    spInputTLE = fopen("/Users/Admin/Documents/sequential/11_dec_2019.txt", "r");
+    spInputTLE = fopen("/Users/Charles/Documents/satellites_to_analyze/low_perigee/input_tle.txt", "r");
     // read data from folder with the TLEs
     // spInput3889 = fopen("/User/Admin/Documents/satellites_analyzed/latest/3889.txt", "r");
     // open one file for satellite 3889 TLEs only
-    spOutput3889 = fopen("/User/Admin/Documents/satellites_analyzed/3889.txt", "a");
+  //  spOutput3889 = fopen("/User/Admin/Documents/satellites_analyzed/3889.txt", "a");
     // output to file that has satellite 3889 TLEs only can I add another TLE here?
-    spOutput = fopen("/Users/Admin/Documents/satellites_analyzed/tle_output_inclination.txt", "w");
+    spOutput = fopen("/Users/Charles/Documents/satellites_to_analyze/low_perigee/output2.txt", "w");
     // put output in folder with inputs
-    
-    
     
     
     int i = 0;
@@ -294,19 +290,24 @@ int main()
     
    
     // sort by inclination
-    qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesInclination);
+    qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesPerigee);
     
     sattellites[0].print(spOutput);  // put in output stream
     sattellites[i-1].print(spOutput); // put in output stream
-    fprintf(spOutput, "sort by inclination\n\n");  // inclination or perigee or RAAN
-    for(int j = 0; j < numSats; j++) fprintf(spOutput, "record %d\t satno %d\t year %d\t epoch %f\t inclination %f\t perigee: %f\t apogeee: %f\n", j, sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].inclination, sattellites[j].perigee, sattellites[j].apogee);
+    fprintf(spOutput, "sort by perigee\n\n");  // inclination or perigee or RAAN
+   
+    for(int j = 0; j < numSats; j++) fprintf(spOutput, "record %d\t satno %d\t epochyr %d\t epochday %f\t inclin %f\t perigee: %f\t apogee: %f\n", j, sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].inclination, sattellites[j].perigee, sattellites[j].apogee);
+       // prints record number (j), sat number, and inclination
+    /*
+    for(int j = 0; j < numSats; j++) fprintf(spOutput, "record %d\t satno %d\t epochyr %d\t epochday %f\t inclin %f\t perigee: %f\t apogee: %f\n", j, sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].inclination, sattellites[j].perigee, sattellites[j].apogee);
     // prints record number (j), sat number, and inclination
-  // need to unsort??
+  
+     */
 
     // if you want to sort by perigee or RAAN, have to put that back in here
     
     fclose(spInputTLE);
-    fclose(spInput3889);  // when we have a TLE file for 3889
+    // fclose(spInput3889);  // when we have a TLE file for 3889
     fclose(spOutput);
    // fclose(spOutputxxx);  // xx means the satellite number for that file
     // close all inputs and outputs, did not have that before
