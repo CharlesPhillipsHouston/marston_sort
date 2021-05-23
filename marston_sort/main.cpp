@@ -1,6 +1,6 @@
 /* standard stuff
 by mike marston, jun 9, 2019
- as of 16 dec 2020
+ as of 23 may 2021
 written to grab TLEs and sort for parameters
 changed so that code gets TLEs from charles's computer and puts output
  into right folder on charles' computer
@@ -143,7 +143,7 @@ public:
     
     }  // end Tle definition
     
-    bool checksum(char *line)  // function that must do something
+    bool checksum(char *line)
     // this fixes some characters in the BSTAR and other not needed fields
     {
         int check = 0;
@@ -220,10 +220,8 @@ int main()
 {
 
     FILE* spInputTLE;  // a file of all the TLEs
-    // FILE* spInput3889 = nullptr;// input eventually points to TLE file for 3889
-    // put in actual path here!!!!
+    
     FILE* spOutput; // output points to file to write calculate results to
-    FILE* spOutput3889; // output points to file to write TLEs for 3889 to
     
     char name_card[TLE_LINE_LENGTH];
     char second_card[TLE_LINE_LENGTH];
@@ -233,7 +231,6 @@ int main()
    // int for_3889 = 3889; // test if this is the same as satnumber
     
     // spOutput is from the TLE file and is calculated output
-    // spOutput3889 is just a list of TLEs for 3889
     
     Tle sattellites[400];  // structure of 400 lines?
    // printf("sat number\n", &sattellites[0].satnumber); // can access fields?
@@ -241,13 +238,13 @@ int main()
   //  spInputTLE = fopen("tle_cards.txt", "r");  // read data from marston
   //  spOutput = fopen("tle_output.txt", "w");  // put satellite in marston
     
-    spInputTLE = fopen("/Users/Charles/Documents/satellites_to_analyze/low_perigee/input_tle.txt", "r");
+    spInputTLE = fopen("/Users/Charles/Desktop/test/input_tle.txt", "r");
     // read data from folder with the TLEs
     // spInput3889 = fopen("/User/Admin/Documents/satellites_analyzed/latest/3889.txt", "r");
     // open one file for satellite 3889 TLEs only
   //  spOutput3889 = fopen("/User/Admin/Documents/satellites_analyzed/3889.txt", "a");
     // output to file that has satellite 3889 TLEs only can I add another TLE here?
-    spOutput = fopen("/Users/Charles/Documents/satellites_to_analyze/low_perigee/output2.txt", "w");
+    spOutput = fopen("/Users/Charles/Desktop/test/output.txt", "w");
     // put output in folder with inputs
     
     
@@ -256,11 +253,9 @@ int main()
     {
         
         fgets(name_card, sizeof(name_card), spInputTLE);  // get first line of TLE
-        fgets(second_card, sizeof(second_card), spInputTLE);  // get first line of TLE, outside of the while
-        fgets(third_card, sizeof(third_card), spInputTLE);  // outside of the while loop
-        sattellites[i] = Tle(name_card, second_card, third_card); // this must insert fields from
-        // cards??
-        // right here, sattellites[1] is the satellite number (satnumber)?
+        fgets(second_card, sizeof(second_card), spInputTLE);  // get second line of TLE
+        fgets(third_card, sizeof(third_card), spInputTLE);  // third line of TLE
+        sattellites[i] = Tle(name_card, second_card, third_card); //
         // printf("test", sattellites[0].satnumber);  // how to point at satnumber?
         // need to look for satnumber here and print to files
         i++;
@@ -284,16 +279,16 @@ int main()
     */
     
     int numSats = i;
-    sattellites[0].print(spOutput);  // not needed
-    sattellites[numSats-1].print(spOutput); // not needed
+    //  sattellites[0].print(spOutput);  // not needed
+    //  sattellites[numSats-1].print(spOutput); // not needed
     // this only prints first four satellites, leave it here for now
     
    
     // sort by inclination
     qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesPerigee);
-    
-    sattellites[0].print(spOutput);  // put in output stream
-    sattellites[i-1].print(spOutput); // put in output stream
+    // this is the C sort routine? Or C++?
+    //  sattellites[0].print(spOutput);  // print TLE, with sorted output
+    // sattellites[i-1].print(spOutput); // also print TLE, with sorted output
     fprintf(spOutput, "sort by perigee\n\n");  // inclination or perigee or RAAN
    
     for(int j = 0; j < numSats; j++) fprintf(spOutput, "satno %d\t epochyr %d %f\t perigee: %f\t apogee: %f\t inclination %f \n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].perigee, sattellites[j].apogee, sattellites[j].inclination);
