@@ -183,7 +183,6 @@ public:
     
 }; // odd to see } then ; end of Tle thing
 
-/*
 int compareSatellitesInclination(const void * a, const void * b) // sort inclination
 {
     if (((Tle*)a)->inclination  < ((Tle*)b)->inclination) return -1;
@@ -191,7 +190,6 @@ int compareSatellitesInclination(const void * a, const void * b) // sort inclina
     if (((Tle*)a)->inclination  > ((Tle*)b)->inclination) return  1;
     return 0; //gets rid of compiler warning, should never get here
 }
- */
 
 int compareSatellitesPerigee(const void * a, const void * b) // sort perigee
 {
@@ -209,10 +207,8 @@ int compareSatellitesRAAN(const void * a, const void * b) // sort RAAN
     return 0; //gets rid of compiler warning, should never get here
 }
 
-
 int main()
 {
-   printf("opening TLE files");  // this does not happen
     
     FILE* spInputTLE;  // a file of all the TLEs
     
@@ -289,6 +285,7 @@ int main()
         printf("\nSort By What Parameter?\n\n");
         printf(" a) Perigee\n");
         printf(" b) RAAN\n");
+        printf(" c) Inclination\n");
         printf(" q) Quit\n\n");
 
     scanf(" %c", &answer);
@@ -296,7 +293,7 @@ int main()
     switch (answer)
     {
         case 'a':
-            printf("Perigee\n");
+            printf("Sort By Perigee\n");
             
     // sort by perigee
       qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesPerigee);  // sends program to compare by perigee
@@ -311,9 +308,8 @@ int main()
     
             break;
         case 'b':
-            printf("RAAN\n");
+            printf("Sort By RAAN\n");
 
-       // sort by RAAN
        qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesRAAN);
        
        sattellites[0].print(spOutput);  // spOutput
@@ -324,6 +320,21 @@ int main()
        // prints record number (j), sat number, and RAAN
        
             break;
+            
+            case 'c':
+            
+            printf("Sort By Inclination\n");
+            
+        qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesInclination);
+             // this is the C sort routine? Or C++?
+             //  sattellites[0].print(spOutput);  // print TLE, with sorted output
+             // sattellites[i-1].print(spOutput); // also print TLE, with sorted output
+            
+             for(int j = 0; j < numSats; j++) fprintf(spOutput, "satno %d\t epochyr %d %f\t perigee: %f\t apogee: %f\t inclination %f \n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].perigee, sattellites[j].apogee, sattellites[j].inclination);
+                // prints record number (j), sat number, and inclination
+            
+            break;
+            
         case 'q':
             printf("You said to quit so I will quit\n");
             break;
@@ -332,35 +343,20 @@ int main()
             break;
    // end of switch
 
-    
-    // sort by inclination turn this on
-   // qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesInclination);
-    // this is the C sort routine? Or C++?
-    //  sattellites[0].print(spOutput);  // print TLE, with sorted output
-    // sattellites[i-1].print(spOutput); // also print TLE, with sorted output
-    
-   // fprintf(spOutput, "sort by perigee\n\n");  // inclination or perigee or RAAN
-   
-    for(int j = 0; j < numSats; j++) fprintf(spOutput, "satno %d\t epochyr %d %f\t perigee: %f\t apogee: %f\t inclination %f \n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].perigee, sattellites[j].apogee, sattellites[j].inclination);
-       // prints record number (j), sat number, and inclination
-
     /*  original code
     for(int j = 0; j < numSats; j++) fprintf(spOutput, "record %d\t satno %d\t epochyr %d\t epochday %f\t inclin %f\t perigee: %f\t apogee: %f\n", j, sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].inclination, sattellites[j].perigee, sattellites[j].apogee);
     // prints record number (j), sat number, and inclination
   
      */
 
-    // if you want to sort by perigee or RAAN, have to put that back in here
-    
+     }  // end of switch statement
+        
     fclose(spInputTLE);
     // fclose(spInput3889);  // when we have a TLE file for 3889
     fclose(spOutput);
    // fclose(spOutputxxx);  // xx means the satellite number for that file
     // close all inputs and outputs, did not have that before
-    
 
-    }  // end of what??
-        
     }  // end of what??
 
 }// end of main
