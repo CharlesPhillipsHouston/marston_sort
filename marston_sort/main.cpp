@@ -212,18 +212,18 @@ int main()
     
     FILE* spInputTLE;  // a file of all the TLEs
     
-    FILE* spOutput; // output points to file to write calculate results to
+    FILE* spOutput = nullptr; // output points to file to write calculate results to
     
     char name_card[TLE_LINE_LENGTH];
     char second_card[TLE_LINE_LENGTH];
     char third_card[TLE_LINE_LENGTH];
     
-    int for_satnumber;  // it is an integer
+   // int for_satnumber;  // it is an integer
    // int for_3889 = 3889; // test if this is the same as satnumber
     
     // spOutput is from the TLE file and is calculated output
     
-    Tle sattellites[400];  // structure of 400 lines?
+    Tle sattellites[500];  // structure of 500 lines?
    // printf("sat number\n", &sattellites[0].satnumber); // can access fields?
     
   //  spInputTLE = fopen("tle_cards.txt", "r");  // read data from marston
@@ -237,9 +237,8 @@ int main()
     // open one file for satellite 3889 TLEs only
   //  spOutput3889 = fopen("/User/Admin/Documents/satellites_analyzed/3889.txt", "a");
     // output to file that has satellite 3889 TLEs only can I add another TLE here?
-    spOutput = fopen("/Users/Charles/Desktop/test/output.txt", "w");
+//   spOutput = fopen("/Users/Charles/Desktop/test/output.txt", "w");
     // put output in folder with inputs
-    
     
     int i = 0;
     while (feof(spInputTLE) == 0) // read in all three cards
@@ -281,7 +280,8 @@ int main()
     char answer = 'a';  // define answer and give it a default value
     // sort by what?
 
-    while (answer != 'q') {
+    while (answer != 'q')
+    {
         printf("\nSort By What Parameter?\n\n");
         printf(" a) Perigee\n");
         printf(" b) RAAN\n");
@@ -294,6 +294,8 @@ int main()
     {
         case 'a':
             printf("Sort By Perigee\n");
+
+    spOutput = fopen("/Users/Charles/Desktop/test/perigee_output.txt", "w");
             
     // sort by perigee
       qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesPerigee);  // sends program to compare by perigee
@@ -303,34 +305,39 @@ int main()
       
       fprintf(spOutput, "sort by perigee\n\n");  // inclination or perigee or RAAN
      
-      for(int j = 0; j < numSats; j++) fprintf(spOutput, "satno %d\t epochyr %d %f\t perigee: %f\t apogee: %f\t inclination %f \n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].perigee, sattellites[j].apogee, sattellites[j].inclination);
+      for(int j = 0; j < numSats; j++) fprintf(spOutput, "satno %d\t epochyr %d %f\t perigee: %5.2f\t apogee: %5.2f\t inclination %5.2f \n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].perigee, sattellites[j].apogee, sattellites[j].inclination);
          // prints record number (j), sat number, and inclination
     
             break;
         case 'b':
             printf("Sort By RAAN\n");
 
+   spOutput = fopen("/Users/Charles/Desktop/test/RAAN_output.txt", "w");
+            
        qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesRAAN);
        
-       sattellites[0].print(spOutput);  // spOutput
-       sattellites[i-1].print(spOutput); // spInput to spOutput
+     //  sattellites[0].print(spOutput);  // spOutput
+     //  sattellites[i-1].print(spOutput); // spInput to spOutput
        fprintf(spOutput, "sort by RAAN\n\n");
        
-       for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t %d\t %f\n", j, sattellites[j].satnumber, sattellites[j].right_ascension);
+       for(int j = 0; j < numSats; j++) fprintf(spOutput, "sequential %d\t satno %d\t RAAN %5.4f\n", j, sattellites[j].satnumber, sattellites[j].right_ascension);
        // prints record number (j), sat number, and RAAN
        
             break;
             
             case 'c':
+        
             
-            printf("Sort By Inclination\n");
+       spOutput = fopen("/Users/Charles/Desktop/test/inclination_output.txt", "w");
             
         qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesInclination);
              // this is the C sort routine? Or C++?
              //  sattellites[0].print(spOutput);  // print TLE, with sorted output
              // sattellites[i-1].print(spOutput); // also print TLE, with sorted output
+
+    fprintf(spOutput, "sort by Inclination\n\n");
             
-             for(int j = 0; j < numSats; j++) fprintf(spOutput, "satno %d\t epochyr %d %f\t perigee: %f\t apogee: %f\t inclination %f \n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].perigee, sattellites[j].apogee, sattellites[j].inclination);
+             for(int j = 0; j < numSats; j++) fprintf(spOutput, "satno %d\t epochyr %d %f\t perigee: %5.2f\t apogee: %5.2f\t inclination %5.4f \n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].perigee, sattellites[j].apogee, sattellites[j].inclination);
                 // prints record number (j), sat number, and inclination
             
             break;
@@ -357,6 +364,6 @@ int main()
    // fclose(spOutputxxx);  // xx means the satellite number for that file
     // close all inputs and outputs, did not have that before
 
-    }  // end of what??
+    }  // end of while
 
 }// end of main
