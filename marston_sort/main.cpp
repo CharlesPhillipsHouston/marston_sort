@@ -1,9 +1,10 @@
 /* standard stuff
-by mike marston, jun 9, 2019
- as of 23 may 2021
+original by mike marston, jun 9, 2019
+ as of 11 jul 2021
 written to grab TLEs and sort for parameters
 changed so that code gets TLEs from charles's computer and puts output
  into right folder on charles' computer
+ now runs in Terminal and asks which parameter to sort by
  moving towards more correct C++ file handling, input, output
  */
 
@@ -23,7 +24,7 @@ changed so that code gets TLEs from charles's computer and puts output
 
 // For Mike's computer
 #define INPUTFILE "tle-cards.txt"  //
-#define OUTPUTFILE "tle_output.txt"  // 
+#define OUTPUTFILE "tle_output.txt"  //
 
 using namespace std;
 
@@ -90,7 +91,7 @@ public:
         linesGood = checksum(line1) & checksum(line2);
         int linenum;
         char mm2d[10], bstr[10], temp[12];
-       // no need to scan card 1, scan card 2
+       // no need to scan card 1 which is the name, so scan card 2
         sscanf( line1, "%d %5d%1s %2d%3d%3s %2d%f %f %s %s %d %4d",
                &linenum,
                &satnumber, classification,
@@ -101,9 +102,6 @@ public:
                bstr,  // not really used
                &ephemeris_type,  // not really used
                &element_number); // end scan card #1
-        
-      
-        
         
         // scan card 3
             sscanf( line2, "%d %5d %f %f %f %f %f %11f%5d",
@@ -185,7 +183,6 @@ public:
     
 }; // odd to see } then ; end of Tle thing
 
-/*
 int compareSatellitesInclination(const void * a, const void * b) // sort inclination
 {
     if (((Tle*)a)->inclination  < ((Tle*)b)->inclination) return -1;
@@ -193,8 +190,6 @@ int compareSatellitesInclination(const void * a, const void * b) // sort inclina
     if (((Tle*)a)->inclination  > ((Tle*)b)->inclination) return  1;
     return 0; //gets rid of compiler warning, should never get here
 }
- */
-
 
 int compareSatellitesPerigee(const void * a, const void * b) // sort perigee
 {
@@ -204,8 +199,6 @@ int compareSatellitesPerigee(const void * a, const void * b) // sort perigee
     return 0; //gets rid of compiler warning, should never get here
 }
  
-
-/*
 int compareSatellitesRAAN(const void * a, const void * b) // sort RAAN
 {
     if (((Tle*)a)->right_ascension  < ((Tle*)b)->right_ascension) return -1;
@@ -214,51 +207,50 @@ int compareSatellitesRAAN(const void * a, const void * b) // sort RAAN
     return 0; //gets rid of compiler warning, should never get here
 }
 
-*/
-
 int main()
 {
-
+    
     FILE* spInputTLE;  // a file of all the TLEs
     
-    FILE* spOutput; // output points to file to write calculate results to
+    FILE* spOutput = nullptr; // output points to file to write calculate results to
     
     char name_card[TLE_LINE_LENGTH];
     char second_card[TLE_LINE_LENGTH];
     char third_card[TLE_LINE_LENGTH];
     
-    int for_satnumber;  // it is an integer
+   // int for_satnumber;  // it is an integer
    // int for_3889 = 3889; // test if this is the same as satnumber
     
     // spOutput is from the TLE file and is calculated output
     
-    Tle sattellites[400];  // structure of 400 lines?
+    Tle sattellites[500];  // structure of 500 lines?
    // printf("sat number\n", &sattellites[0].satnumber); // can access fields?
     
   //  spInputTLE = fopen("tle_cards.txt", "r");  // read data from marston
   //  spOutput = fopen("tle_output.txt", "w");  // put satellite in marston
     
     spInputTLE = fopen("/Users/Charles/Desktop/test/input_tle.txt", "r");
+    
+    //  spInputTLE = fopen("/Users/Charles/Desktop/test/input_tle.txt", "r");
     // read data from folder with the TLEs
     // spInput3889 = fopen("/User/Admin/Documents/satellites_analyzed/latest/3889.txt", "r");
     // open one file for satellite 3889 TLEs only
   //  spOutput3889 = fopen("/User/Admin/Documents/satellites_analyzed/3889.txt", "a");
     // output to file that has satellite 3889 TLEs only can I add another TLE here?
-    spOutput = fopen("/Users/Charles/Desktop/test/output.txt", "w");
+//   spOutput = fopen("/Users/Charles/Desktop/test/output.txt", "w");
     // put output in folder with inputs
-    
     
     int i = 0;
     while (feof(spInputTLE) == 0) // read in all three cards
     {
-        
         fgets(name_card, sizeof(name_card), spInputTLE);  // get first line of TLE
         fgets(second_card, sizeof(second_card), spInputTLE);  // get second line of TLE
         fgets(third_card, sizeof(third_card), spInputTLE);  // third line of TLE
         sattellites[i] = Tle(name_card, second_card, third_card); //
         // printf("test", sattellites[0].satnumber);  // how to point at satnumber?
         // need to look for satnumber here and print to files
-        i++;
+        i++;   // increment i
+        
     }  // end of while loop, reads TLEs
     
     
@@ -283,41 +275,95 @@ int main()
     //  sattellites[numSats-1].print(spOutput); // not needed
     // this only prints first four satellites, leave it here for now
     
-   
-    // sort by inclination
-    qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesPerigee);
-    // this is the C sort routine? Or C++?
-    //  sattellites[0].print(spOutput);  // print TLE, with sorted output
-    // sattellites[i-1].print(spOutput); // also print TLE, with sorted output
-    fprintf(spOutput, "sort by perigee\n\n");  // inclination or perigee or RAAN
-   
-    for(int j = 0; j < numSats; j++) fprintf(spOutput, "satno %d\t epochyr %d %f\t perigee: %f\t apogee: %f\t inclination %f \n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].perigee, sattellites[j].apogee, sattellites[j].inclination);
-       // prints record number (j), sat number, and inclination
+  printf("\nSorting Program\n");
     
+    char answer = 'a';  // define answer and give it a default value
+    // sort by what?
+
+    while (answer != 'q')
+    {
+        printf("\nSort By What Parameter?\n\n");
+        printf(" a) Perigee\n");
+        printf(" b) RAAN\n");
+        printf(" c) Inclination\n");
+        printf(" q) Quit\n\n");
+
+    scanf(" %c", &answer);
+    
+    switch (answer)
+    {
+        case 'a':
+            printf("Sort By Perigee\n");
+
+    spOutput = fopen("/Users/Charles/Desktop/test/perigee_output.txt", "w");
+            
+    // sort by perigee
+      qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesPerigee);  // sends program to compare by perigee
+      // this is the C sort routine
+      //  sattellites[0].print(spOutput);  // print TLE, with sorted output
+      // sattellites[i-1].print(spOutput); // also print TLE, with sorted output
+      
+      fprintf(spOutput, "sort by perigee\n\n");  // inclination or perigee or RAAN
+     
+      for(int j = 0; j < numSats; j++) fprintf(spOutput, "satno %d\t epochyr %d %f\t perigee: %5.2f\t apogee: %5.2f\t inclination %5.2f \n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].perigee, sattellites[j].apogee, sattellites[j].inclination);
+         // prints record number (j), sat number, and inclination
+    
+            break;
+        case 'b':
+            printf("Sort By RAAN\n");
+
+   spOutput = fopen("/Users/Charles/Desktop/test/RAAN_output.txt", "w");
+            
+       qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesRAAN);
+       
+     //  sattellites[0].print(spOutput);  // spOutput
+     //  sattellites[i-1].print(spOutput); // spInput to spOutput
+       fprintf(spOutput, "sort by RAAN\n\n");
+       
+       for(int j = 0; j < numSats; j++) fprintf(spOutput, "sequential %d\t satno %d\t RAAN %5.4f\n", j, sattellites[j].satnumber, sattellites[j].right_ascension);
+       // prints record number (j), sat number, and RAAN
+       
+            break;
+            
+            case 'c':
+        
+            
+       spOutput = fopen("/Users/Charles/Desktop/test/inclination_output.txt", "w");
+            
+        qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesInclination);
+             // this is the C sort routine? Or C++?
+             //  sattellites[0].print(spOutput);  // print TLE, with sorted output
+             // sattellites[i-1].print(spOutput); // also print TLE, with sorted output
+
+    fprintf(spOutput, "sort by Inclination\n\n");
+            
+             for(int j = 0; j < numSats; j++) fprintf(spOutput, "satno %d\t epochyr %d %f\t perigee: %5.2f\t apogee: %5.2f\t inclination %5.4f \n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].perigee, sattellites[j].apogee, sattellites[j].inclination);
+                // prints record number (j), sat number, and inclination
+            
+            break;
+            
+        case 'q':
+            printf("You said to quit so I will quit\n");
+            break;
+        default:
+            printf("Invalid selection. Try again.\n");
+            break;
+   // end of switch
+
     /*  original code
     for(int j = 0; j < numSats; j++) fprintf(spOutput, "record %d\t satno %d\t epochyr %d\t epochday %f\t inclin %f\t perigee: %f\t apogee: %f\n", j, sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].inclination, sattellites[j].perigee, sattellites[j].apogee);
     // prints record number (j), sat number, and inclination
   
      */
 
-    // if you want to sort by perigee or RAAN, have to put that back in here
-    
+     }  // end of switch statement
+        
     fclose(spInputTLE);
     // fclose(spInput3889);  // when we have a TLE file for 3889
     fclose(spOutput);
    // fclose(spOutputxxx);  // xx means the satellite number for that file
     // close all inputs and outputs, did not have that before
-    
-    /*
-    // sort by RAAN
-    qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesRAAN);
-    
-    sattellites[0].print(spOutput);  // spOutput
-    sattellites[i-1].print(spOutput); // spInput to spOutput
-    fprintf(spOutput, "sort by RAAN\n\n");
-    
-    for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t %d\t %f\n", j, sattellites[j].satnumber, sattellites[j].right_ascension);
-    // prints record number (j), sat number, and RAAN
-    */
 
-}  // end of main
+    }  // end of while
+
+}// end of main
