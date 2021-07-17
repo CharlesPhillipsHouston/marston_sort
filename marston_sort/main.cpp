@@ -229,7 +229,7 @@ int main()
   //  spInputTLE = fopen("tle_cards.txt", "r");  // read data from marston
   //  spOutput = fopen("tle_output.txt", "w");  // put satellite in marston
     
-    spInputTLE = fopen("/Users/Charles/Desktop/test/input_tle.txt", "r");
+    spInputTLE = fopen("/Users/Charles/Desktop/test/input_tles.txt", "r");
     
     //  spInputTLE = fopen("/Users/Charles/Desktop/test/input_tle.txt", "r");
     // read data from folder with the TLEs
