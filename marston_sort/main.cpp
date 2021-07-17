@@ -295,7 +295,7 @@ int main()
         case 'a':
             printf("Sort By Perigee\n");
 
-    spOutput = fopen("/Users/Charles/Desktop/test/perigee_output.txt", "w");
+    spOutput = fopen("/Users/charlesphillips/Desktop/test/perigee_output.txt", "w");
             
     // sort by perigee
       qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesPerigee);  // sends program to compare by perigee
@@ -312,7 +312,7 @@ int main()
         case 'b':
             printf("Sort By RAAN\n");
 
-   spOutput = fopen("/Users/Charles/Desktop/test/RAAN_output.txt", "w");
+   spOutput = fopen("/Users/charlesphillips/Desktop/test/RAAN_output.txt", "w");
             
        qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesRAAN);
        
@@ -328,7 +328,7 @@ int main()
             case 'c':
         
             
-       spOutput = fopen("/Users/Charles/Desktop/test/inclination_output.txt", "w");
+       spOutput = fopen("/Users/charlesphillips/Desktop/test/inclination_output.txt", "w");
             
         qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesInclination);
              // this is the C sort routine? Or C++?
