@@ -229,7 +229,7 @@ int main()
   //  spInputTLE = fopen("tle_cards.txt", "r");  // read data from marston
   //  spOutput = fopen("tle_output.txt", "w");  // put satellite in marston
 
-    spInputTLE = fopen("/Users/charlesphillips/Desktop/test/input_tles.txt", "r");
+    spInputTLE = fopen("/Users/Charles/Desktop/test/input_tles.txt", "r");
     
     //  spInputTLE = fopen("/Users/Charles/Desktop/test/input_tle.txt", "r");
     // read data from folder with the TLEs
@@ -275,17 +275,18 @@ int main()
     //  sattellites[numSats-1].print(spOutput); // not needed
     // this only prints first four satellites, leave it here for now
     
-  printf("\nSorting Program\n");
+  printf("\nSatellite Program\n");
     
     char answer = 'a';  // define answer and give it a default value
     // sort by what?
 
     while (answer != 'q')
     {
-        printf("\nSort By What Parameter?\n\n");
-        printf(" a) Perigee\n");
-        printf(" b) RAAN\n");
-        printf(" c) Inclination\n");
+        printf("\nDo What?\n\n");
+        printf(" a) Sort By Perigee\n");
+        printf(" b) Sort By RAAN\n");
+        printf(" c) Sort By Inclination\n");
+        printf(" d) Print Apogee And Perigee, Leave Sorted By Satellite Number\n\n");
         printf(" q) Quit\n\n");
 
     scanf(" %c", &answer);
@@ -295,7 +296,7 @@ int main()
         case 'a':
             printf("Sort By Perigee\n");
 
-    spOutput = fopen("/Users/charlesphillips/Desktop/test/perigee_output.txt", "w");
+    spOutput = fopen("/Users/Charles/Desktop/test/perigee_output.txt", "w");
             
     // sort by perigee
       qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesPerigee);  // sends program to compare by perigee
@@ -312,7 +313,7 @@ int main()
         case 'b':
             printf("Sort By RAAN\n");
 
-   spOutput = fopen("/Users/charlesphillips/Desktop/test/RAAN_output.txt", "w");
+   spOutput = fopen("/Users/Charles/Desktop/test/RAAN_output.txt", "w");
             
        qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesRAAN);
        
@@ -326,9 +327,8 @@ int main()
             break;
             
             case 'c':
-        
-            
-       spOutput = fopen("/Users/charlesphillips/Desktop/test/inclination_output.txt", "w");
+                    
+       spOutput = fopen("/Users/Charles/Desktop/test/inclination_output.txt", "w");
             
         qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesInclination);
              // this is the C sort routine? Or C++?
@@ -339,6 +339,14 @@ int main()
             
              for(int j = 0; j < numSats; j++) fprintf(spOutput, "satno %d\t epochyr %d %f\t perigee: %5.2f\t apogee: %5.2f\t inclination %5.4f \n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].perigee, sattellites[j].apogee, sattellites[j].inclination);
                 // prints record number (j), sat number, and inclination
+            
+            break;
+  
+            case 'd':
+            spOutput = fopen("/Users/Charles/Desktop/test/apogee_perigee_output.txt", "w");
+
+            for(int j = 0; j < numSats; j++) fprintf(spOutput, "satno %d\t epochyr %d %f\t perigee: %5.2f\t apogee: %5.2f\n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].perigee, sattellites[j].apogee);
+                  // prints record number (j), sat number, apogee and perigee
             
             break;
             
