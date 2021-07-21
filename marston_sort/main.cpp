@@ -218,13 +218,13 @@ int main()
          
          char answer1 = 'e';  // define answer1 and give it a default value of e
          // sort by what?
-
-         while (answer1 != 'q')
+         // stay in while loop until a valid answer is given
+         while (answer1 == 'e')
          {
              printf(" a) MacBook Pro\n");
              printf(" b) Mac Mini\n");
              printf(" c) Mike's System\n");
-             printf(" q) Never Mind, Quit\n\n");
+             //printf(" q) Never Mind, Quit\n\n");
 
          scanf(" %c", &answer1);
          }
@@ -249,14 +249,10 @@ int main()
          spOutput = fopen("/Users/mike/Dropbox/Projects/Charles/selected_satellite.txt", "w");
                               
                  break;
-                 
-             case 'q':  // initialize spInputTLE and spOutput to stop compiler nagging
-                 spInputTLE = fopen("/Users/mike/Dropbox/Projects/Charles/input_tle.txt", "r");
-                 spOutput = fopen("/Users/mike/Dropbox/Projects/Charles/no_output.txt", "w");
-                 break;
              default:// initialize spInputTLE and spOutput to stop compiler nagging
-                 spInputTLE = fopen("/Users/mike/Dropbox/Projects/Charles/input_tle.txt", "r");
-                 spOutput = fopen("/Users/mike/Dropbox/Projects/Charles/no_output.txt", "w");
+                 //didn't choose 1 of the valid options, reset answer1 to default value so it goes through loop again
+                 // do this in case answer1 is not a valid choice or 'e'
+                 answer1 = 'e'; 
                  break;
                  
          }  // end of switch
