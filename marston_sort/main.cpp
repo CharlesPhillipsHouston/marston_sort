@@ -214,14 +214,58 @@ int main()
     
     FILE* spOutput = nullptr; // output points to file to write calculate results to
     
+    printf("\nWhich Computer??\n");
+         
+         char answer1 = 'e';  // define answer1 and give it a default value of e
+         // sort by what?
+
+         while (answer1 != 'q')
+         {
+             printf(" a) MacBook Pro\n");
+             printf(" b) Mac Mini\n");
+             printf(" c) Mike's System\n");
+             printf(" q) Never Mind, Quit\n\n");
+
+         scanf(" %c", &answer1);
+         }
+         switch (answer1)
+         {
+             case 'a':
+
+         spInputTLE = fopen("/Users/charlesphillips/Desktop/test/input_tle.txt", "r");
+         spOutput = fopen("/Users/charlesphillips/Desktop/test/selected_satellite.txt", "w");
+                        
+                 break;
+             case 'b':
+
+         spInputTLE = fopen("/Users/Charles/Desktop/test/input_tle.txt", "r");
+         spOutput = fopen("/Users/Charles/Desktop/test/selected_satellite.txt", "w");
+                         
+                 break;
+                 
+                 case 'c':
+                         
+         spInputTLE = fopen("/Users/mike/Dropbox/Projects/Charles/input_tle.txt", "r");
+         spOutput = fopen("/Users/mike/Dropbox/Projects/Charles/selected_satellite.txt", "w");
+                              
+                 break;
+                 
+             case 'q':  // initialize spInputTLE and spOutput to stop compiler nagging
+                 spInputTLE = fopen("/Users/mike/Dropbox/Projects/Charles/input_tle.txt", "r");
+                 spOutput = fopen("/Users/mike/Dropbox/Projects/Charles/no_output.txt", "w");
+                 break;
+             default:// initialize spInputTLE and spOutput to stop compiler nagging
+                 spInputTLE = fopen("/Users/mike/Dropbox/Projects/Charles/input_tle.txt", "r");
+                 spOutput = fopen("/Users/mike/Dropbox/Projects/Charles/no_output.txt", "w");
+                 break;
+                 
+         }  // end of switch
+
+         
+    
     char name_card[TLE_LINE_LENGTH];
     char second_card[TLE_LINE_LENGTH];
     char third_card[TLE_LINE_LENGTH];
-    
-   // int for_satnumber;  // it is an integer
-   // int for_3889 = 3889; // test if this is the same as satnumber
-    
-    // spOutput is from the TLE file and is calculated output
     
     Tle sattellites[500];  // structure of 500 lines?
    // printf("sat number\n", &sattellites[0].satnumber); // can access fields?
@@ -229,7 +273,8 @@ int main()
   //  spInputTLE = fopen("tle_cards.txt", "r");  // read data from marston
   //  spOutput = fopen("tle_output.txt", "w");  // put satellite in marston
 
-    spInputTLE = fopen("/Users/charlesphillips/Desktop/test/input_tles.txt", "r");
+    
+    spInputTLE = fopen("/Users/Charles/Desktop/test/input_tles.txt", "r");
     
     //  spInputTLE = fopen("/Users/Charles/Desktop/test/input_tle.txt", "r");
     // read data from folder with the TLEs
@@ -269,7 +314,7 @@ int main()
                 {}
                 // there is no need for an else, do an action or just go on
     */
-    
+         
     int numSats = i;
     //  sattellites[0].print(spOutput);  // not needed
     //  sattellites[numSats-1].print(spOutput); // not needed
@@ -277,26 +322,27 @@ int main()
     
   printf("\nSatellite Program\n");
     
-    char answer = 'a';  // define answer and give it a default value
+    char answer2 = 'f';  // define answer2 and give it a default value
     // sort by what?
 
-    while (answer != 'q')
+    while (answer2 != 'q')
     {
         printf("\nDo What?\n\n");
         printf(" a) Sort By Perigee\n");
         printf(" b) Sort By RAAN\n");
         printf(" c) Sort By Inclination\n");
-        printf(" d) Print Apogee And Perigee, Leave Sorted By Satellite Number\n\n");
+        printf(" d) Print Apogee And Perigee, Leave Sorted By Satellite Number\n");
+        printf(" e) Print RAAN, Leave Sorted By Satellite Number\n\n");
         printf(" q) Quit\n\n");
 
-    scanf(" %c", &answer);
+    scanf(" %c", &answer2);
     
-    switch (answer)
+    switch (answer2)
     {
         case 'a':
             printf("Sort By Perigee\n");
 
-    spOutput = fopen("/Users/charlesphillips/Desktop/test/perigee_output.txt", "w");
+    spOutput = fopen("/Users/Charlesq/Desktop/test/perigee_output.txt", "w");
             
     // sort by perigee
       qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesPerigee);  // sends program to compare by perigee
@@ -313,7 +359,7 @@ int main()
         case 'b':
             printf("Sort By RAAN\n");
 
-   spOutput = fopen("/Users/charlesphillips/Desktop/test/RAAN_output.txt", "w");
+   spOutput = fopen("/Users/Charles/Desktop/test/RAAN_output.txt", "w");
             
        qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesRAAN);
        
@@ -328,7 +374,7 @@ int main()
             
             case 'c':
                     
-       spOutput = fopen("/Users/charlesphillips/Desktop/test/inclination_output.txt", "w");
+       spOutput = fopen("/Users/Charles/Desktop/test/inclination_output.txt", "w");
             
         qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesInclination);
              // this is the C sort routine? Or C++?
@@ -343,12 +389,20 @@ int main()
             break;
   
             case 'd':
-            spOutput = fopen("/Users/charlesphillips/Desktop/test/apogee_perigee_output.txt", "w");
+            spOutput = fopen("/Users/Charles/Desktop/test/apogee_perigee_output.txt", "w");
 
             for(int j = 0; j < numSats; j++) fprintf(spOutput, "satno %d\t epochyr %d %f\t perigee: %5.2f\t apogee: %5.2f\n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].perigee, sattellites[j].apogee);
                   // prints record number (j), sat number, apogee and perigee
             
             break;
+            
+        case 'e':
+          spOutput = fopen("/Users/Charles/Desktop/test/RAAN_output.txt", "w");
+
+            for(int j = 0; j < numSats; j++) fprintf(spOutput, "satno %d\t RAAN: %5.2f\n", sattellites[j].satnumber, sattellites[j].right_ascension);
+                // prints sat number, RAAN
+          
+          break;
             
         case 'q':
             printf("You said to quit so I will quit\n");
