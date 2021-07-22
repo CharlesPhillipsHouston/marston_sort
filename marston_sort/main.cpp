@@ -1,9 +1,9 @@
 /* standard stuff
 original by mike marston, jun 9, 2019
- as of 11 jul 2021
+ as of 22 jul 2021
 written to grab TLEs and sort for parameters
 changed so that code gets TLEs from charles's computer and puts output
- into right folder on charles' computer
+ into right folder on computers
  now runs in Terminal and asks which parameter to sort by
  moving towards more correct C++ file handling, input, output
  */
@@ -217,14 +217,12 @@ int main()
     printf("\nWhich Computer??\n");
          
          char answer1 = 'e';  // define answer1 and give it a default value of e
-         // sort by what?
-         // stay in while loop until a valid answer is given
+         // pick correct computer
          while (answer1 == 'e')
          {
              printf(" a) MacBook Pro\n");
              printf(" b) Mac Mini\n");
              printf(" c) Mike's System\n");
-             //printf(" q) Never Mind, Quit\n\n");
 
          scanf(" %c", &answer1);
          }
