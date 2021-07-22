@@ -214,49 +214,13 @@ int main()
     
     FILE* spOutput = nullptr; // output points to file to write calculate results to
     
-    printf("\nWhich Computer??\n");
-         
-         char answer1 = 'e';  // define answer1 and give it a default value of e
-         // pick correct computer
-         while (answer1 == 'e')
-         {
-             printf(" a) MacBook Pro\n");
-             printf(" b) Mac Mini\n");
-             printf(" c) Mike's System\n");
+   // spInputTLE = fopen(“~/Desktop/analyses/input_tle.txt", "r");
+  //  spOutput = fopen(“~/Desktop/analyses/selected_satellite.txt", "w”);
 
-         scanf(" %c", &answer1);
-         }
-         switch (answer1)
-         {
-             case 'a':
-
-         spInputTLE = fopen("/Users/charlesphillips/Desktop/test/input_tle.txt", "r");
-         spOutput = fopen("/Users/charlesphillips/Desktop/test/selected_satellite.txt", "w");
-                        
-                 break;
-             case 'b':
-
-         spInputTLE = fopen("/Users/Charles/Desktop/test/input_tle.txt", "r");
-         spOutput = fopen("/Users/Charles/Desktop/test/selected_satellite.txt", "w");
-                         
-                 break;
-                 
-                 case 'c':
-                         
-         spInputTLE = fopen("/Users/mike/Dropbox/Projects/Charles/input_tle.txt", "r");
-         spOutput = fopen("/Users/mike/Dropbox/Projects/Charles/selected_satellite.txt", "w");
-                              
-                 break;
-             default:// initialize spInputTLE and spOutput to stop compiler nagging
-                 //didn't choose 1 of the valid options, reset answer1 to default value so it goes through loop again
-                 // do this in case answer1 is not a valid choice or 'e'
-                 answer1 = 'e'; 
-                 break;
-                 
-         }  // end of switch
-
-         
-    
+   
+    spInputTLE = fopen("/Users/Charles/Desktop/analyses/input_tles.txt", "r");
+   // each case has a unique spOutput
+   
     char name_card[TLE_LINE_LENGTH];
     char second_card[TLE_LINE_LENGTH];
     char third_card[TLE_LINE_LENGTH];
@@ -266,18 +230,6 @@ int main()
     
   //  spInputTLE = fopen("tle_cards.txt", "r");  // read data from marston
   //  spOutput = fopen("tle_output.txt", "w");  // put satellite in marston
-
-    
-    spInputTLE = fopen("/Users/Charles/Desktop/test/input_tles.txt", "r");
-    
-    //  spInputTLE = fopen("/Users/Charles/Desktop/test/input_tle.txt", "r");
-    // read data from folder with the TLEs
-    // spInput3889 = fopen("/User/Admin/Documents/satellites_analyzed/latest/3889.txt", "r");
-    // open one file for satellite 3889 TLEs only
-  //  spOutput3889 = fopen("/User/Admin/Documents/satellites_analyzed/3889.txt", "a");
-    // output to file that has satellite 3889 TLEs only can I add another TLE here?
-//   spOutput = fopen("/Users/Charles/Desktop/test/output.txt", "w");
-    // put output in folder with inputs
     
     int i = 0;
     while (feof(spInputTLE) == 0) // read in all three cards
@@ -336,7 +288,7 @@ int main()
         case 'a':
             printf("Sort By Perigee\n");
 
-    spOutput = fopen("/Users/Charlesq/Desktop/test/perigee_output.txt", "w");
+    spOutput = fopen("/Users/Charles/Desktop/analyses/perigee_output.txt", "w");
             
     // sort by perigee
       qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesPerigee);  // sends program to compare by perigee
@@ -353,7 +305,7 @@ int main()
         case 'b':
             printf("Sort By RAAN\n");
 
-   spOutput = fopen("/Users/Charles/Desktop/test/RAAN_output.txt", "w");
+   spOutput = fopen("/Users/Charles/Desktop/analyses/RAAN_output.txt", "w");
             
        qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesRAAN);
        
@@ -368,10 +320,9 @@ int main()
             
             case 'c':
                     
-       spOutput = fopen("/Users/Charles/Desktop/test/inclination_output.txt", "w");
+       spOutput = fopen("/Users/Charles/Desktop/analyses/inclination_output.txt", "w");
             
         qsort(&sattellites[0], i, sizeof(Tle), compareSatellitesInclination);
-             // this is the C sort routine? Or C++?
              //  sattellites[0].print(spOutput);  // print TLE, with sorted output
              // sattellites[i-1].print(spOutput); // also print TLE, with sorted output
 
@@ -383,7 +334,7 @@ int main()
             break;
   
             case 'd':
-            spOutput = fopen("/Users/Charles/Desktop/test/apogee_perigee_output.txt", "w");
+            spOutput = fopen("/Users/Charles/Desktop/analyses/apogee_perigee_output.txt", "w");
 
             for(int j = 0; j < numSats; j++) fprintf(spOutput, "satno %d\t epochyr %d %f\t perigee: %5.2f\t apogee: %5.2f\n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].perigee, sattellites[j].apogee);
                   // prints record number (j), sat number, apogee and perigee
@@ -391,10 +342,10 @@ int main()
             break;
             
         case 'e':
-          spOutput = fopen("/Users/Charles/Desktop/test/RAAN_output.txt", "w");
+          spOutput = fopen("/Users/Charles/Desktop/analyses/RAAN_output.txt", "w");
 
-            for(int j = 0; j < numSats; j++) fprintf(spOutput, "satno %d\t RAAN: %5.2f\n", sattellites[j].satnumber, sattellites[j].right_ascension);
-                // prints sat number, RAAN
+            for(int j = 0; j < numSats; j++) fprintf(spOutput, "sequential %d\t satno %d\t RAAN: %5.2f\n", j, sattellites[j].satnumber, sattellites[j].right_ascension);
+                // prints sequential number, sat number, RAAN
           
           break;
             
@@ -415,9 +366,8 @@ int main()
      }  // end of switch statement
         
     fclose(spInputTLE);
-    // fclose(spInput3889);  // when we have a TLE file for 3889
+    
     fclose(spOutput);
-   // fclose(spOutputxxx);  // xx means the satellite number for that file
     // close all inputs and outputs, did not have that before
 
     }  // end of while
