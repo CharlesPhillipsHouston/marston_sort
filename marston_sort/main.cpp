@@ -1,11 +1,11 @@
 /* standard stuff
 original by mike marston, jun 9, 2019
- as of 22 jul 2021
+ as of 3 aug 2021
 written to grab TLEs and sort for parameters
 changed so that code gets TLEs from charles's computer and puts output
  into right folder on computers
  now runs in Terminal and asks which parameter to sort by
- moving towards more correct C++ file handling, input, output
+ greatly improved output, columns have labels
  */
 
 #include <stdio.h>
@@ -82,7 +82,7 @@ public:
         return(b);
     }
     Tle(){}; // empty constructor
-    Tle(char *satName, char * l1, char* l2)  // fill in TLE structure
+    Tle(char *satName, char * l1, char* l2)  // satName??? fill in TLE structure
     {
         strncpy(platform, satName, sizeof(platform));
         // platform is name of satellite
@@ -225,7 +225,7 @@ int main()
     char second_card[TLE_LINE_LENGTH];
     char third_card[TLE_LINE_LENGTH];
     
-    Tle sattellites[500];  // structure of 500 lines?
+    Tle sattellites[500];  // structure named sattellites of 500 lines?
    // printf("sat number\n", &sattellites[0].satnumber); // can access fields?
     
   //  spInputTLE = fopen("tle_cards.txt", "r");  // read data from marston
@@ -261,7 +261,7 @@ int main()
                 // there is no need for an else, do an action or just go on
     */
          
-    int numSats = i;
+    int numSats = i;  // count up the number of satellites handled
     //  sattellites[0].print(spOutput);  // not needed
     //  sattellites[numSats-1].print(spOutput); // not needed
     // this only prints first four satellites, leave it here for now
@@ -286,7 +286,6 @@ int main()
     switch (answer2)
     {
         case 'a':
-            printf("Sort By Perigee\n");
 
     spOutput = fopen("/Users/Charles/Desktop/analyses/perigee_output.txt", "w");
             
@@ -296,14 +295,13 @@ int main()
       //  sattellites[0].print(spOutput);  // print TLE, with sorted output
       // sattellites[i-1].print(spOutput); // also print TLE, with sorted output
       
-      fprintf(spOutput, "sort by perigee\n\n");  // inclination or perigee or RAAN
-     
-      for(int j = 0; j < numSats; j++) fprintf(spOutput, "satno %d\t epochyr %d %f\t perigee: %5.2f\t apogee: %5.2f\t inclination %5.2f \n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].perigee, sattellites[j].apogee, sattellites[j].inclination);
+      fprintf(spOutput, "Sort by Perigee\n\n");  // inclination or perigee or RAAN
+       fprintf(spOutput, "Satno: \t Epoch \t \t Perigee \t Apogee \t Inclination \t\n");
+      for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t %d %f\t %5.2f\t %5.2f\t %5.2f \n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].perigee, sattellites[j].apogee, sattellites[j].inclination);
          // prints record number (j), sat number, and inclination
     
             break;
         case 'b':
-            printf("Sort By RAAN\n");
 
    spOutput = fopen("/Users/Charles/Desktop/analyses/RAAN_output.txt", "w");
             
@@ -311,9 +309,9 @@ int main()
        
      //  sattellites[0].print(spOutput);  // spOutput
      //  sattellites[i-1].print(spOutput); // spInput to spOutput
-       fprintf(spOutput, "sort by RAAN\n\n");
-       
-       for(int j = 0; j < numSats; j++) fprintf(spOutput, "sequential %d\t satno %d\t RAAN %5.4f\n", j, sattellites[j].satnumber, sattellites[j].right_ascension);
+       fprintf(spOutput, "Sort by RAAN\n\n");
+      fprintf(spOutput, "Sequential: \t Satno: \t RAAN \n");
+       for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t %d\t %5.4f\n", j, sattellites[j].satnumber, sattellites[j].right_ascension);
        // prints record number (j), sat number, and RAAN
        
             break;
@@ -326,25 +324,30 @@ int main()
              //  sattellites[0].print(spOutput);  // print TLE, with sorted output
              // sattellites[i-1].print(spOutput); // also print TLE, with sorted output
 
-    fprintf(spOutput, "sort by Inclination\n\n");
+    fprintf(spOutput, "Sort by Inclination\n\n");
             
-             for(int j = 0; j < numSats; j++) fprintf(spOutput, "satno %d\t epochyr %d %f\t perigee: %5.2f\t apogee: %5.2f\t inclination %5.4f \n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].perigee, sattellites[j].apogee, sattellites[j].inclination);
+       fprintf(spOutput, "Satno: \t Epoch \t \t Perigee \t Apogee \t Inclination \t\n");
+             for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t %d %f\t %5.2f\t %5.2f\t %5.4f \n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].perigee, sattellites[j].apogee, sattellites[j].inclination);
                 // prints record number (j), sat number, and inclination
             
             break;
   
             case 'd':
             spOutput = fopen("/Users/Charles/Desktop/analyses/apogee_perigee_output.txt", "w");
-
-            for(int j = 0; j < numSats; j++) fprintf(spOutput, "satno %d\t epochyr %d %f\t perigee: %5.2f\t apogee: %5.2f\n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].perigee, sattellites[j].apogee);
+   fprintf(spOutput, "Output Perigee and Apogee \n");
+            
+   fprintf(spOutput, "Satno: \t Epoch \t\t Perigee \t Apogee \t Inclination \t\n");
+            for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t %d %f\t %5.2f\t %5.2f %5.2f\n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].perigee, sattellites[j].apogee, sattellites[j].inclination);
                   // prints record number (j), sat number, apogee and perigee
             
             break;
             
         case 'e':
           spOutput = fopen("/Users/Charles/Desktop/analyses/RAAN_output.txt", "w");
-
-            for(int j = 0; j < numSats; j++) fprintf(spOutput, "sequential %d\t satno %d\t RAAN: %5.2f\n", j, sattellites[j].satnumber, sattellites[j].right_ascension);
+   fprintf(spOutput, "Output RAAN \n");
+            
+   fprintf(spOutput, "Sequential: \t Satno: \t RAAN: \n");
+            for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t %d\t %5.2f\n", j, sattellites[j].satnumber, sattellites[j].right_ascension);
                 // prints sequential number, sat number, RAAN
           
           break;
