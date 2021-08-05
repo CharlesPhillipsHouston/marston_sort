@@ -343,7 +343,7 @@ int main()
             break;
             
         case 'e':
-          spOutput = fopen("/Users/Charles/Desktop/analyses/RAAN_output.txt", "w");
+          spOutput = fopen("/Users/Charles/Desktop/analyses/RAAN_print.txt", "w");
    fprintf(spOutput, "Output RAAN \n");
             
    fprintf(spOutput, "Sequential: \t Satno: \t RAAN: \n");
