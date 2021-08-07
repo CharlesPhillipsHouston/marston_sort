@@ -1,9 +1,8 @@
 /* standard stuff
 original by mike marston, jun 9, 2019
- as of 3 aug 2021
+ as of 5 aug 2021
 written to grab TLEs and sort for parameters
-changed so that code gets TLEs from charles's computer and puts output
- into right folder on computers
+this also reads TLEs and output w/o sort
  now runs in Terminal and asks which parameter to sort by
  greatly improved output, columns have labels
  */
