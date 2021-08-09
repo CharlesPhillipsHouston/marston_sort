@@ -1,7 +1,7 @@
 /* standard stuff
 original by mike marston, jun 9, 2019
- as of 5 aug 2021
-written to grab TLEs and sort for parameters
+ as of 9 aug 2021
+written to grab three line TLEs and sort for parameters
 this also reads TLEs and output w/o sort
  now runs in Terminal and asks which parameter to sort by
  greatly improved output, columns have labels
