@@ -5,6 +5,7 @@ written to grab three line TLEs and sort for parameters
 this also reads TLEs and output w/o sort
  now runs in Terminal and asks which parameter to sort by
  greatly improved output, columns have labels
+ currently revised to print out RAAN for Kara TLEs
  */
 
 #include <stdio.h>
@@ -216,8 +217,7 @@ int main()
    // spInputTLE = fopen(“~/Desktop/analyses/input_tle.txt", "r");
   //  spOutput = fopen(“~/Desktop/analyses/selected_satellite.txt", "w”);
 
-   
-    spInputTLE = fopen("/Users/Charles/Desktop/analyses/input_tles.txt", "r");
+    spInputTLE = fopen("/Users/Charles/Documents/satellites_to_analyze/ukraine_kara/all_tles.txt", "r");
    // each case has a unique spOutput
    
     char name_card[TLE_LINE_LENGTH];
@@ -242,23 +242,6 @@ int main()
         i++;   // increment i
         
     }  // end of while loop, reads TLEs
-    
-    
-    //  if this is the TLE for 3889, add it to that file
-   // for_satnumber = sattellites[1];  // set for_satnumber to be the satellite number
-    // 3889 is a number
-    /*
-    if (sattellites[i].satnumber == 3889)
-        // test to see if we are on the 3889 TLE; we don't pass this test ever
-      
-      //  fprintf(spOutput3889, "test"); // later put 3889 TLE into the 3889 file
-    // print out what satellite number we are on
-      //  printf("do we get here??");
-    fprintf(spOutput3889, "%d does this file exist?\t", sattellites[1].satnumber);
-    else
-                {}
-                // there is no need for an else, do an action or just go on
-    */
          
     int numSats = i;  // count up the number of satellites handled
     //  sattellites[0].print(spOutput);  // not needed
@@ -266,6 +249,7 @@ int main()
     // this only prints first four satellites, leave it here for now
     
   printf("\nSatellite Program\n");
+     printf("Three Line TLEs\n");
     
     char answer2 = 'f';  // define answer2 and give it a default value
     // sort by what?
@@ -342,11 +326,11 @@ int main()
             break;
             
         case 'e':
-          spOutput = fopen("/Users/Charles/Desktop/analyses/RAAN_print.txt", "w");
+          spOutput = fopen("/Users/Charles/Desktop/analyses/Kara_RAAN_print.txt", "w");
    fprintf(spOutput, "Output RAAN \n");
             
    fprintf(spOutput, "Sequential: \t Satno: \t RAAN: \n");
-            for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t %d\t %5.2f\n", j, sattellites[j].satnumber, sattellites[j].right_ascension);
+            for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d %d %f\t %5.2f\n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].right_ascension);
                 // prints sequential number, sat number, RAAN
           
           break;
