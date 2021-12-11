@@ -217,7 +217,7 @@ int main()
    // spInputTLE = fopen(“~/Desktop/analyses/input_tle.txt", "r");
   //  spOutput = fopen(“~/Desktop/analyses/selected_satellite.txt", "w”);
 
-    spInputTLE = fopen("/Users/Charles/Documents/satellites_to_analyze/ukraine_kara/all_tles.txt", "r");
+    spInputTLE = fopen("/Users/Charles/Desktop/analyses/input_tle.txt", "r");
    // each case has a unique spOutput
    
     char name_card[TLE_LINE_LENGTH];
@@ -326,7 +326,7 @@ int main()
             break;
             
         case 'e':
-          spOutput = fopen("/Users/Charles/Desktop/analyses/Kara_RAAN_print.txt", "w");
+          spOutput = fopen("/Users/Charles/Desktop/analyses/RAAN_print.txt", "w");
    fprintf(spOutput, "Output RAAN \n");
             
    fprintf(spOutput, "Sequential: \t Satno: \t RAAN: \n");
