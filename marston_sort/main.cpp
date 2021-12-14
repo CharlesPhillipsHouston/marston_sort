@@ -330,7 +330,7 @@ int main()
    fprintf(spOutput, "Output RAAN \n");
             
    fprintf(spOutput, "Sequential: \t Satno: \t RAAN: \n");
-            for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d %d %f\t %5.2f\n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].right_ascension);
+            for(int j = 0; j < numSats; j++) fprintf(spOutput, "%d\t%d %f\t %5.2f\n", sattellites[j].satnumber, sattellites[j].epoch_year, sattellites[j].epoch_day, sattellites[j].right_ascension);
                 // prints sequential number, sat number, RAAN
           
           break;
