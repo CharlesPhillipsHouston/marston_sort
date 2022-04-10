@@ -28,7 +28,7 @@ this also reads TLEs and output w/o sort
 
 using namespace std;
 
-class Tle  // this is C++
+class Tle  // create Tle
 {
 public:
     char platform[25];  // satellite name, first card
@@ -85,7 +85,7 @@ public:
     Tle(char *satName, char * l1, char* l2)  // satName??? fill in TLE structure
     {
         strncpy(platform, satName, sizeof(platform));
-        // platform is name of satellite
+        // platform is name card of satellite
         strncpy(line1, l1, sizeof(line1));
         strncpy(line2, l2, sizeof(line2));
         linesGood = checksum(line1) & checksum(line2);
@@ -236,7 +236,7 @@ int main()
         fgets(name_card, sizeof(name_card), spInputTLE);  // get first line of TLE
         fgets(second_card, sizeof(second_card), spInputTLE);  // get second line of TLE
         fgets(third_card, sizeof(third_card), spInputTLE);  // third line of TLE
-        sattellites[i] = Tle(name_card, second_card, third_card); //
+        sattellites[i] = Tle(name_card, second_card, third_card); // create the struct
         // printf("test", sattellites[0].satnumber);  // how to point at satnumber?
         // need to look for satnumber here and print to files
         i++;   // increment i
