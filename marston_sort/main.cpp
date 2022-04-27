@@ -63,7 +63,7 @@ public:
     float apogee;
     float perigee;
     
-    float tleStrToFloat(char * in)
+    float tleStrToFloat(char * in)  // a function inside of definition
     {
         char temp[10];
         if(in[0] == '-') temp[0] = '-';
@@ -84,7 +84,7 @@ public:
     Tle(){}; // empty constructor
     Tle(char *satName, char * l1, char* l2)  // satName??? fill in TLE structure
     {
-        strncpy(platform, satName, sizeof(platform));
+        strncpy(platform, satName, sizeof(platform));  // where does satname come from? platform?
         // platform is name card of satellite
         strncpy(line1, l1, sizeof(line1));
         strncpy(line2, l2, sizeof(line2));
